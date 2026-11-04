@@ -14,6 +14,11 @@ function render(){
   document.querySelector('#back').onclick=()=>{step--;render();focusHeading();};
   document.querySelector('#next').onclick=()=>{if(answers[step]===null)return;step++;render();focusHeading();};
 }
-function renderResult(id){const r=quizData.results[id];app.innerHTML=`<section class="result"><p class="eyebrow">${r.tag}</p><div class="result-top"><div><h1 tabindex="-1">Вы — ${r.name}</h1><p class="source">${r.source}</p></div><div class="result-symbol" aria-hidden="true">${r.symbol}</div></div><div class="result-copy">${r.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div><div class="result-actions"><button class="primary" id="again">Пройти ещё раз <span aria-hidden="true">↻</span></button><button class="secondary" id="share">Поделиться квизом</button></div><p class="share-status" role="status" id="share-status"></p></section>`;document.querySelector('#again').onclick=()=>{reset();focusHeading();};document.querySelector('#share').onclick=async()=>{const status=document.querySelector('#share-status');const text=`Я — ${r.name}! А какой вы персонаж исходя из манеры тратить?`;try{if(navigator.share){await navigator.share({title:quizData.title,text,url:location.href});}else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text+' '+location.href);status.textContent='Текст и ссылка скопированы. Можно отправлять друзьям.';}else{status.textContent='Скопируйте адрес страницы из адресной строки, чтобы поделиться квизом.';}}catch(e){if(e.name!=='AbortError')status.textContent='Не удалось поделиться. Скопируйте адрес страницы из адресной строки.';}};}
+
+function renderResult(id){
+  const r=quizData.results[id];
+  app.innerHTML=`<section class="result"><p class="eyebrow">${r.tag}</p><div class="result-top"><div><h1 tabindex="-1">Вы — ${r.name}</h1><p class="source">${r.source}</p></div><img class="result-image" src="assets/result-${id}.png" alt="${r.name}"></div><div class="result-copy">${r.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div><div class="result-actions"><button class="primary" id="again">Пройти ещё раз <span aria-hidden="true">↻</span></button></div></section>`;
+  document.querySelector('#again').onclick=()=>{reset();focusHeading();};
+}
 reset();
 
