@@ -1,0 +1,5 @@
+.env*
+supabase
+tests
+README.md
+EMAIL-SETUP.md

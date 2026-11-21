@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/submit-quiz.js": {
+      "includeFiles": "quiz-data.js",
+      "maxDuration": 60
+    }
+  }
+}
